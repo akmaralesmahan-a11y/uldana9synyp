@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="kk">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Кенесары Қасымұлының хандық құрған кезеңдері</title>
+  <meta name="description" content="Кенесары Қасымұлының хандық құрған кезеңдері — интерактивті 3D презентация. 9 сынып оқушысы И. Ұлдана, жетекшісі М. Перизат." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500;1,600&family=Montserrat:wght@300;400;500;600;700&family=Unbounded:wght@400;600;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <canvas id="dust" aria-hidden="true"></canvas>
+  <div class="progress"><span id="progressBar"></span></div>
+
+  <header class="topbar">
+    <div class="brand"><span class="brand-mark">◆</span> Кенесары хан <span class="brand-sep">·</span> 1837–1847</div>
+    <div class="top-right">
+      <div class="counter"><span id="cur">01</span><i>/</i><span id="total">14</span></div>
+      <button class="icon-btn" id="fsBtn" title="Толық экран (F)" aria-label="Толық экран">⛶</button>
+    </div>
+  </header>
+
+  <nav class="dots" id="dots" aria-label="Слайдтар"></nav>
+
+  <div class="controls">
+    <button class="nav-btn" id="prevBtn" aria-label="Алдыңғы">←</button>
+    <span class="slide-name" id="slideName">Титул</span>
+    <button class="nav-btn" id="nextBtn" aria-label="Келесі">→</button>
+  </div>
+
+  <main class="deck" id="deck">
+
+    <!-- 1. ТИТУЛ -->
+    <section class="slide" data-title="Титул">
+      <div class="bg" style="background-image:url(img/hero.jpg)"></div>
+      <div class="shade shade-left"></div>
+      <div class="shanyrak-wrap" aria-hidden="true">
+        <svg class="shanyrak" viewBox="0 0 400 400">
+          <defs>
+            <linearGradient id="g1" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0" stop-color="#f6e3a3"/><stop offset=".5" stop-color="#d4a94e"/><stop offset="1" stop-color="#7a5418"/>
+            </linearGradient>
+          </defs>
+          <circle cx="200" cy="200" r="190" fill="none" stroke="url(#g1)" stroke-width="10"/>
+          <circle cx="200" cy="200" r="172" fill="none" stroke="url(#g1)" stroke-width="2" stroke-dasharray="4 10"/>
+          <circle cx="200" cy="200" r="150" fill="none" stroke="url(#g1)" stroke-width="6"/>
+          <g fill="none" stroke="url(#g1)" stroke-width="9" stroke-linecap="round">
+            <path d="M60 200 Q200 40 340 200"/><path d="M60 200 Q200 360 340 200"/>
+            <path d="M200 60 Q40 200 200 340"/><path d="M200 60 Q360 200 200 340"/>
+            <path d="M95 140 Q200 90 305 140"/><path d="M95 260 Q200 310 305 260"/>
+            <path d="M140 95 Q90 200 140 305"/><path d="M260 95 Q310 200 260 305"/>
+          </g>
+          <g stroke="url(#g1)" stroke-width="3" opacity=".7">
+            <line x1="200" y1="10" x2="200" y2="50"/><line x1="200" y1="350" x2="200" y2="390"/>
+            <line x1="10" y1="200" x2="50" y2="200"/><line x1="350" y1="200" x2="390" y2="200"/>
+            <line x1="66" y1="66" x2="94" y2="94"/><line x1="306" y1="306" x2="334" y2="334"/>
+            <line x1="334" y1="66" x2="306" y2="94"/><line x1="94" y1="306" x2="66" y2="334"/>
+          </g>
+        </svg>
+        <div class="shanyrak-glow"></div>
+      </div>
+      <div class="content title-content">
+        <p class="kicker a" style="--d:.1s">Қазақстан тарихы · Зерттеу жұмысы</p>
+        <h1 class="title a" style="--d:.25s">
+          <span class="gold">Кенесары Қасымұлының</span>
+          <span class="title-em">хандық құрған</span>
+          <span class="gold">кезеңдері</span>
+        </h1>
+        <p class="lead a" style="--d:.45s">1837–1847 жылдардағы ұлт-азаттық қозғалыс және соңғы қазақ хандығының тарихы</p>
+        <div class="authors a" style="--d:.65s">
+          <div class="author tilt">
+            <span class="author-label">Орындаған</span>
+            <span class="author-name">И. Ұлдана</span>
+            <span class="author-sub">9 сынып оқушысы</span>
+          </div>
+          <div class="author tilt">
+            <span class="author-label">Жетекшісі</span>
+            <span class="author-name">М. Перизат</span>
+            <span class="author-sub">тарих пәні</span>
+          </div>
+        </div>
+        <button class="btn-gold a" style="--d:.85s" data-go="1">Саяхатты бастау <b>→</b></button>
+        <p class="hint a" style="--d:1.1s">← → пернелері, тышқан дөңгелегі немесе экранды сырғыту арқылы ауысыңыз</p>
+      </div>
+    </section>
+
+    <!-- 2. МАЗМҰНЫ -->
+    <section class="slide" data-title="Мазмұны">
+      <div class="bg" style="background-image:url(img/steppe.jpg)"></div>
+      <div class="shade"></div>
+      <div class="content">
+        <p class="kicker a">Жоспар</p>
+        <h2 class="h2 a" style="--d:.1s">Презентация <span class="gold">мазмұны</span></h2>
+        <div class="toc">
+          <button class="toc-item tilt a" style="--d:.15s" data-go="2"><i>01</i><span>Кенесары кім?</span></button>
+          <button class="toc-item tilt a" style="--d:.2s" data-go="3"><i>02</i><span>Көтерілістің себептері</span></button>
+          <button class="toc-item tilt a" style="--d:.25s" data-go="4"><i>03</i><span>Хан сайлануы — 1841</span></button>
+          <button class="toc-item tilt a" style="--d:.3s" data-go="5"><i>04</i><span>Интерактивті карта</span></button>
+          <button class="toc-item tilt a" style="--d:.35s" data-go="6"><i>05</i><span>Тарихқа саяхат</span></button>
+          <button class="toc-item tilt a" style="--d:.4s" data-go="7"><i>06</i><span>Негізгі кезеңдер</span></button>
+          <button class="toc-item tilt a" style="--d:.45s" data-go="8"><i>07</i><span>Басқару жүйесі</span></button>
+          <button class="toc-item tilt a" style="--d:.5s" data-go="9"><i>08</i><span>Серіктері</span></button>
+          <button class="toc-item tilt a" style="--d:.55s" data-go="10"><i>09</i><span>Қозғалыстың аяқталуы</span></button>
+          <button class="toc-item tilt a" style="--d:.6s" data-go="11"><i>10</i><span>Тарихи маңызы</span></button>
+          <button class="toc-item tilt a" style="--d:.65s" data-go="12"><i>11</i><span>Қорытынды</span></button>
+        </div>
+      </div>
+    </section>
+
+    <!-- 3. КЕНЕСАРЫ КІМ -->
+    <section class="slide" data-title="Кенесары кім?">
+      <div class="bg" style="background-image:url(img/council.jpg)"></div>
+      <div class="shade shade-strong"></div>
+      <div class="content">
+        <div class="split">
+          <div class="portrait-stage a" style="--d:.1s">
+            <div class="portrait tilt">
+              <img src="img/portrait.jpg" alt="Кенесары ханның көркем бейнесі" />
+              <div class="portrait-frame"></div>
+              <div class="portrait-cap">Кенесары Қасымұлы<br><small>1802 — 1847</small></div>
+            </div>
+          </div>
+          <div>
+            <p class="kicker a" style="--d:.15s">Тұлға</p>
+            <h2 class="h2 a" style="--d:.25s">Кенесары <span class="gold">Қасымұлы</span></h2>
+            <p class="lead a" style="--d:.35s">Қазақ халқының соңғы ханы, 1837–1847 жылдардағы ұлт-азаттық қозғалыстың көсемі. Ұлы Абылай ханның немересі, Қасым сұлтанның ұлы.</p>
+            <ul class="list a" style="--d:.45s">
+              <li>1802 жылы Орта жүз жерінде, төре әулетінде дүниеге келген.</li>
+              <li>Жастайынан әкесі Қасым сұлтан мен ағалары Саржан, Есенгелдінің жанында азаттық күресіне араласты.</li>
+              <li>Әкесі мен ағасы Саржан Қоқан билеушілерінің қолынан қаза тапты — бұл оның күрес жолын шыңдай түсті.</li>
+              <li>Батыл қолбасшы, шебер дипломат, ақылды мемлекет қайраткері ретінде танылды.</li>
+            </ul>
+            <div class="chips a" style="--d:.55s">
+              <span class="chip"><b>1802</b> туған жылы</span>
+              <span class="chip"><b>1837</b> көтеріліс басы</span>
+              <span class="chip"><b>1841</b> хан сайланды</span>
+              <span class="chip"><b>1847</b> қаза тапты</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 4. СЕБЕПТЕРІ -->
+    <section class="slide" data-title="Көтерілістің себептері">
+      <div class="bg" style="background-image:url(img/steppe.jpg)"></div>
+      <div class="shade shade-strong"></div>
+      <div class="content">
+        <p class="kicker a">Тарихи алғышарттар</p>
+        <h2 class="h2 a" style="--d:.1s">Көтерілістің <span class="gold">себептері</span></h2>
+        <div class="grid3">
+          <article class="card tilt a" style="--d:.15s"><i class="num">01</i><h3>Хандық биліктің жойылуы</h3><p>1822 жылғы «Сібір қырғыздары туралы жарғы» Орта жүзде, 1824 жылы Кіші жүзде хан билігін жойды.</p></article>
+          <article class="card tilt a" style="--d:.22s"><i class="num">02</i><h3>Жердің тартып алынуы</h3><p>Қазақ даласында бекіністер, округтер мен казак станицалары салынып, шұрайлы жайылымдар тартып алынды.</p></article>
+          <article class="card tilt a" style="--d:.29s"><i class="num">03</i><h3>Салықтың көбеюі</h3><p>Түтін салығы мен түрлі алымдар халықтың әлеуметтік жағдайын күрт нашарлатты.</p></article>
+          <article class="card tilt a" style="--d:.36s"><i class="num">04</i><h3>Сұлтандардың құқығы шектелді</h3><p>Ата-бабадан келе жатқан басқару дәстүрі бұзылып, билік патша шенеуніктерінің қолына өтті.</p></article>
+          <article class="card tilt a" style="--d:.43s"><i class="num">05</i><h3>Қоқан хандығының езгісі</h3><p>Оңтүстіктегі қазақтар Қоқан бектерінің ауыр салығы мен зорлығына ұшырады.</p></article>
+          <article class="card tilt a" style="--d:.5s"><i class="num">06</i><h3>Тәуелсіздікке ұмтылыс</h3><p>Басты мақсат — Абылай хан заманындағы тәуелсіз, біртұтас қазақ мемлекетін қалпына келтіру.</p></article>
+        </div>
+      </div>
+    </section>
+
+    <!-- 5. ХАН САЙЛАНУЫ -->
+    <section class="slide" data-title="Хан сайлануы — 1841">
+      <div class="bg" style="background-image:url(img/khan.jpg)"></div>
+      <div class="shade shade-right"></div>
+      <div class="content">
+        <div class="split split-year">
+          <div class="year-stage a" style="--d:.1s">
+            <div class="year3d" data-year="1841"></div>
+            <p class="year-caption">жылдың күзі · Сарыарқа</p>
+          </div>
+          <div>
+            <p class="kicker a" style="--d:.2s">Ақ киізге көтеру</p>
+            <h2 class="h2 a" style="--d:.3s">Кенесары — <span class="gold">бүкіл қазақтың ханы</span></h2>
+            <p class="lead a" style="--d:.4s">1841 жылы үш жүздің өкілдері жиналған құрылтайда Кенесары Қасымұлы ата-баба салты бойынша ақ киізге көтеріліп, хан болып жарияланды. Абылайдан кейін үш жүзді бір туның астына біріктірген хан осы еді.</p>
+            <ol class="steps a" style="--d:.5s">
+              <li><b>Құрылтай</b><span>Үш жүздің билері, батырлары, сұлтандары жиналды</span></li>
+              <li><b>Ақ киіз</b><span>Ханды ақ киізге отырғызып, көтеру — биліктің заңды белгісі</span></li>
+              <li><b>Ту мен ант</b><span>Хан туы көтеріліп, батырлар адалдыққа ант берді</span></li>
+            </ol>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 6. КАРТА -->
+    <section class="slide slide-map" data-title="Интерактивті карта">
+      <div class="bg" style="background-image:url(img/steppe.jpg)"></div>
+      <div class="shade shade-strong"></div>
+      <div class="content content-wide">
+        <div class="map-head a">
+          <div>
+            <p class="kicker">Тарихи география</p>
+            <h2 class="h2 h2-sm">Кенесары жорықтарының <span class="gold">картасы</span></h2>
+          </div>
+          <div class="map-actions">
+            <button class="btn-gold btn-sm" id="tourBtn">▶ Жорық жолымен саяхат</button>
+            <button class="btn-ghost btn-sm" id="overviewBtn">Барлығын көру</button>
+          </div>
+        </div>
+        <div class="map-layout a" style="--d:.15s">
+          <div class="map-frame">
+            <div id="map"></div>
+            <div class="map-legend">
+              <span><i class="lg lg-k"></i>Кенесары қозғалысы</span>
+              <span><i class="lg lg-r"></i>Патша әкімшілігі</span>
+              <span><i class="lg lg-area"></i>Хандықтың шамамен аумағы</span>
+            </div>
+          </div>
+          <aside class="map-side">
+            <div class="place-info" id="placeInfo">
+              <span class="pi-year">1837–1847</span>
+              <h3>Картаны зерттеңіз</h3>
+              <p>Белгілерді басыңыз немесе «Жорық жолымен саяхат» батырмасы арқылы Кенесары ханның жолын бастан-аяқ қадағалаңыз.</p>
+            </div>
+            <div class="place-list" id="placeList"></div>
+          </aside>
+        </div>
+      </div>
+    </section>
+
+    <!-- 7. ТАРИХҚА САЯХАТ -->
+    <section class="slide" data-title="Тарихқа саяхат">
+      <div class="bg" style="background-image:url(img/battle.jpg)"></div>
+      <div class="shade shade-strong"></div>
+      <div class="content content-wide">
+        <div class="tl-head a">
+          <div>
+            <p class="kicker">Жылдар бойынша</p>
+            <h2 class="h2 h2-sm">Тарихқа <span class="gold">саяхат</span></h2>
+          </div>
+          <button class="btn-ghost btn-sm" id="tlPlay">▶ Автоойнату</button>
+        </div>
+        <div class="tl-stage a" style="--d:.15s">
+          <button class="tl-arrow" id="tlPrev" aria-label="Алдыңғы жыл">‹</button>
+          <article class="tl-card" id="tlCard">
+            <div class="tl-year" id="tlYear">1837</div>
+            <div class="tl-body">
+              <span class="tl-tag" id="tlTag">Бастама</span>
+              <h3 id="tlTitle">Көтерілістің басталуы</h3>
+              <p id="tlText"></p>
+            </div>
+          </article>
+          <button class="tl-arrow" id="tlNext" aria-label="Келесі жыл">›</button>
+        </div>
+        <div class="tl-track a" style="--d:.3s">
+          <div class="tl-line"><span id="tlFill"></span></div>
+          <div class="tl-nodes" id="tlNodes"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 8. НЕГІЗГІ КЕЗЕҢДЕР -->
+    <section class="slide" data-title="Негізгі кезеңдер">
+      <div class="bg" style="background-image:url(img/hero.jpg)"></div>
+      <div class="shade shade-strong"></div>
+      <div class="content">
+        <p class="kicker a">Үш кезең</p>
+        <h2 class="h2 a" style="--d:.1s">Қозғалыстың <span class="gold">негізгі кезеңдері</span></h2>
+        <p class="sub a" style="--d:.15s">Карточкаларды басып, аударып көріңіз</p>
+        <div class="phases">
+          <div class="flip a" style="--d:.2s" tabindex="0">
+            <div class="flip-in">
+              <div class="flip-face front"><span class="ph-n">I</span><span class="ph-y">1837 – 1840</span><h3>Көтерілістің басталуы</h3><span class="ph-more">толығырақ ↻</span></div>
+              <div class="flip-face back"><h4>Сарыарқадағы күрес</h4><ul><li>Көкшетау, Ақмола өңіріндегі бекіністерге шабуылдар</li><li>1838 ж. Ақмола бекінісінің өртелуі</li><li>Көтеріліс Кіші жүз бен Орта жүзге таралды</li><li>Патша әкімшілігімен хат алмасу, келіссөздер</li></ul></div>
+            </div>
+          </div>
+          <div class="flip a" style="--d:.3s" tabindex="0">
+            <div class="flip-in">
+              <div class="flip-face front"><span class="ph-n">II</span><span class="ph-y">1841 – 1845</span><h3>Хандықтың құрылуы мен күшеюі</h3><span class="ph-more">толығырақ ↻</span></div>
+              <div class="flip-face back"><h4>Хандық шыңы</h4><ul><li>1841 ж. Кенесары хан сайланды</li><li>Мемлекеттік басқару жүйесі құрылды</li><li>Қоқан бекіністеріне жорықтар (Созақ, Жаңақорған)</li><li>1844 ж. Жантөрин жасағының талқандалуы</li></ul></div>
+            </div>
+          </div>
+          <div class="flip a" style="--d:.4s" tabindex="0">
+            <div class="flip-in">
+              <div class="flip-face front"><span class="ph-n">III</span><span class="ph-y">1846 – 1847</span><h3>Жетісудағы соңғы күрес</h3><span class="ph-more">толығырақ ↻</span></div>
+              <div class="flip-face back"><h4>Қозғалыстың жеңілуі</h4><ul><li>Торғай, Ырғызда бекіністер салынып, қоныс тарылды</li><li>1846 ж. Жетісуға, Іле бойына көшу</li><li>Қырғыз манаптарымен соғыс</li><li>1847 ж. Кенесары ханның қаза табуы</li></ul></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 9. БАСҚАРУ ЖҮЙЕСІ -->
+    <section class="slide" data-title="Басқару жүйесі">
+      <div class="bg" style="background-image:url(img/council.jpg)"></div>
+      <div class="shade shade-strong"></div>
+      <div class="content content-wide">
+        <p class="kicker a">Мемлекеттік құрылым</p>
+        <h2 class="h2 h2-sm a" style="--d:.1s">Хандықты <span class="gold">басқару жүйесі</span></h2>
+        <div class="gov">
+          <div class="gov-top a" style="--d:.15s">
+            <div class="gov-khan"><span class="crown">♛</span><b>ХАН</b><small>Жоғарғы билік · Абылай дәстүрі</small></div>
+            <div class="gov-link"></div>
+            <div class="gov-council"><b>Хан кеңесі</b><small>Сенімді батырлар, билер, сұлтандар. Маңызды мәселелер кеңесте шешілді. Кеңеске тегіне емес, ерлігі мен ақылына қарай адамдар алынды.</small></div>
+            <div class="gov-link"></div>
+          </div>
+          <div class="gov-grid">
+            <div class="gov-card tilt a" style="--d:.25s"><span class="gi">⚔</span><h4>Әскер</h4><p>20 мыңға дейін тұрақты әскер. Мыңдық, жүздік, ондықтарға бөлінді. Қатаң тәртіп, ерлерге марапат белгілері.</p></div>
+            <div class="gov-card tilt a" style="--d:.3s"><span class="gi">⚒</span><h4>Қару-жарақ</h4><p>Оқ-дәрі мен қару жасайтын шеберханалар ашылды, шеберлер арнайы тартылды.</p></div>
+            <div class="gov-card tilt a" style="--d:.35s"><span class="gi">⚖</span><h4>Сот</h4><p>Билер соты әдет-ғұрып пен шариғат негізінде жүрді. Ұрлық пен барымтаға қатаң жаза берілді.</p></div>
+            <div class="gov-card tilt a" style="--d:.4s"><span class="gi">◎</span><h4>Салық</h4><p>Зекет — мал басынан, ұшыр — егін өнімінен алынды. Салық әскер мен мемлекет қажетіне жұмсалды.</p></div>
+            <div class="gov-card tilt a" style="--d:.45s"><span class="gi">✉</span><h4>Дипломатия</h4><p>Ресей, Қоқан, Хиуа, Бұхарамен хат алмасты. Хатшылар мен елшілер жасағы, хан мөрі болды.</p></div>
+            <div class="gov-card tilt a" style="--d:.5s"><span class="gi">❦</span><h4>Шаруашылық</h4><p>Егіншілік дамытылды, сауда керуендері қорғалды. Жансыздар (барлау) қызметі жұмыс істеді.</p></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 10. СЕРІКТЕРІ -->
+    <section class="slide" data-title="Серіктері">
+      <div class="bg" style="background-image:url(img/battle.jpg)"></div>
+      <div class="shade shade-strong"></div>
+      <div class="content">
+        <p class="kicker a">Кенесарыға байланысты тұлғалар</p>
+        <h2 class="h2 a" style="--d:.1s">Ханның <span class="gold">серіктері</span></h2>
+        <div class="grid3 people">
+          <article class="person tilt a" style="--d:.15s"><span class="medal">Н</span><div><h3>Наурызбай батыр</h3><p>Кенесарының інісі, қаһарман батыр. 1847 жылы ағасымен бірге қаза тапты.</p></div></article>
+          <article class="person tilt a" style="--d:.2s"><span class="medal">Б</span><div><h3>Бопай ханым</h3><p>Кенесарының қарындасы. Ақылды, батыл, жорықтарға қатысқан қайраткер әйел.</p></div></article>
+          <article class="person tilt a" style="--d:.25s"><span class="medal">А</span><div><h3>Ағыбай батыр</h3><p>Ханның ең сенімді қолбасшыларының бірі, көптеген шайқастардың басшысы.</p></div></article>
+          <article class="person tilt a" style="--d:.3s"><span class="medal">И</span><div><h3>Иман батыр</h3><p>Хан кеңесінің мүшесі, Кенесарының адал серігі, белгілі әскер басы.</p></div></article>
+          <article class="person tilt a" style="--d:.35s"><span class="medal">Ж</span><div><h3>Жоламан Тіленшіұлы</h3><p>Кіші жүздегі азаттық күрестің батыры, Кенесары қозғалысын қолдады.</p></div></article>
+          <article class="person tilt a" style="--d:.4s"><span class="medal">Н</span><div><h3>Нысанбай жырау</h3><p>Ханның жанындағы жырау. «Кенесары – Наурызбай» дастанының авторы.</p></div></article>
+        </div>
+      </div>
+    </section>
+
+    <!-- 11. АЯҚТАЛУЫ -->
+    <section class="slide" data-title="Қозғалыстың аяқталуы">
+      <div class="bg" style="background-image:url(img/ending.jpg)"></div>
+      <div class="shade shade-strong"></div>
+      <div class="content">
+        <p class="kicker a">1846 – 1847</p>
+        <h2 class="h2 a" style="--d:.1s">Қозғалыстың <span class="gold">аяқталуы</span></h2>
+        <div class="split split-even">
+          <ol class="vsteps a" style="--d:.2s">
+            <li><b>1845</b><span>Патша үкіметі Торғай мен Ырғыз өзендері бойында бекіністер салып, Кенесарының қонысын тарылтты.</span></li>
+            <li><b>1846</b><span>Хан әскерімен Жетісуға, Іле бойына көшті. Ұлы жүздің бір бөлігі қолдады, кейбір сұлтандар патша жағына шықты.</span></li>
+            <li><b>1847</b><span>Қырғыз манаптарымен соғыс басталды. Тоқмақ маңындағы Кекілік-Сеңгір (Майтөбе) шайқасында хан тұтқынға түсіп, қаза тапты.</span></li>
+            <li><b>Соңы</b><span>Наурызбай батыр мен көптеген серіктері де қаза тапты. Ханның басы Омбыға жіберілді деген деректер бар.</span></li>
+          </ol>
+          <div class="card card-dark tilt a" style="--d:.35s">
+            <h3 class="card-title">Жеңілу себептері</h3>
+            <ul class="list list-tight">
+              <li>Күштердің теңсіздігі — патша әскерінің қару-жарақ артықшылығы</li>
+              <li>Рулар арасындағы алауыздық</li>
+              <li>Кейбір сұлтандар мен билердің патша жағына шығуы</li>
+              <li>Жан-жақтан салынған бекіністер қоршауы</li>
+              <li>Қырғыздармен болған қайғылы соғыс</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 12. ТАРИХИ МАҢЫЗЫ -->
+    <section class="slide" data-title="Тарихи маңызы">
+      <div class="bg" style="background-image:url(img/khan.jpg)"></div>
+      <div class="shade shade-strong"></div>
+      <div class="content">
+        <p class="kicker a">Мұра</p>
+        <h2 class="h2 a" style="--d:.1s">Тарихи <span class="gold">маңызы</span></h2>
+        <div class="stats a" style="--d:.2s">
+          <div class="stat tilt"><b data-count="10">0</b><span>жыл азаттық күрес</span></div>
+          <div class="stat tilt"><b data-count="3">0</b><span>жүзді біріктірді</span></div>
+          <div class="stat tilt"><b data-count="20000">0</b><span>сарбазға дейін әскер</span></div>
+          <div class="stat tilt"><b data-count="45">0</b><span>жасында қаза тапты</span></div>
+        </div>
+        <div class="grid2">
+          <div class="card tilt a" style="--d:.3s"><h3>Соңғы хандық</h3><p>Қазақ мемлекеттілігін қалпына келтіруге бағытталған ең ірі және соңғы әрекет болды.</p></div>
+          <div class="card tilt a" style="--d:.35s"><h3>Ұлттық сана</h3><p>Халықтың азаттық рухын оятып, кейінгі ұлт-азаттық көтерілістерге үлгі болды.</p></div>
+          <div class="card tilt a" style="--d:.4s"><h3>Әдебиеттегі бейнесі</h3><p>Нысанбай жыраудың дастаны, І. Есенберлиннің «Көшпенділер» трилогиясындағы «Қаһар» романы.</p></div>
+          <div class="card tilt a" style="--d:.45s"><h3>Тарихи жады</h3><p>Е. Бекмахановтың зерттеулері. 2001 жылы Астанада Кенесары ханға ескерткіш орнатылды.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 13. ҚОРЫТЫНДЫ -->
+    <section class="slide" data-title="Қорытынды">
+      <div class="bg" style="background-image:url(img/steppe.jpg)"></div>
+      <div class="shade shade-strong"></div>
+      <div class="content content-narrow center">
+        <p class="kicker a">Қорытынды</p>
+        <h2 class="h2 a" style="--d:.1s">Тәуелсіздік жолындағы <span class="gold">он жыл</span></h2>
+        <blockquote class="quote a" style="--d:.25s">
+          Кенесары Қасымұлы — тәуелсіз қазақ мемлекетін қайта құруды мақсат еткен соңғы хан. Ол үш жүзді біріктіріп, тұрақты әскер, салық, сот, дипломатия жүйесі бар хандық құрды. Қозғалыс жеңіліске ұшырағанымен, оның азаттық идеясы ұрпақтан-ұрпаққа жалғасып, бүгінгі Тәуелсіз Қазақстанның рухани тірегіне айналды.
+        </blockquote>
+        <div class="takeaways a" style="--d:.4s">
+          <span>Бірлік</span><span>Ерлік</span><span>Тәуелсіздік</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- 14. РАХМЕТ -->
+    <section class="slide" data-title="Назарларыңызға рахмет">
+      <div class="bg" style="background-image:url(img/hero.jpg)"></div>
+      <div class="shade"></div>
+      <div class="content center">
+        <div class="final-orb a"><span>◆</span></div>
+        <h2 class="title title-final a" style="--d:.15s"><span class="gold">Назарларыңызға рахмет!</span></h2>
+        <p class="lead a" style="--d:.3s">Кенесары Қасымұлының хандық құрған кезеңдері</p>
+        <div class="authors authors-center a" style="--d:.45s">
+          <div class="author"><span class="author-label">Орындаған</span><span class="author-name">И. Ұлдана</span><span class="author-sub">9 сынып оқушысы</span></div>
+          <div class="author"><span class="author-label">Жетекшісі</span><span class="author-name">М. Перизат</span><span class="author-sub">тарих пәні</span></div>
+        </div>
+        <button class="btn-ghost a" style="--d:.6s" data-go="0">↺ Басына оралу</button>
+      </div>
+    </section>
+
+  </main>
+
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
